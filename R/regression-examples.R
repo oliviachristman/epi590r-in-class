@@ -72,15 +72,20 @@ linear_model3 <- glm(glasses ~ eyesight_cat + sex_cat + income,
 											data = nlsy, family = binomial())
 log_binomial <- glm (glasses ~ eyesight_cat + sex_cat, data = nlsy, family = binomial(link = "log"))
 
-tbl_regression(
+poission_model2 <- glm(glasses ~ eyesight_cat + sex_cat, data = nlsy, family = binomial(link="log"))
+
+
+
+tbl_regression (
 	log_binomial,
 	exponentionate = TRUE,
 	label = list(
 		glasses ~ "Glasses",
 		eyesight_cat ~ "Eyesight",
 		sex_cat ~ "Sex"
-	))
+))
 
+tbl_regression
 ## Tables
 
 tbl_regression(
