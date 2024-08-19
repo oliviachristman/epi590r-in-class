@@ -33,8 +33,30 @@ tbl_uvregression(
 	method.args = list(family = binomial()),
 	exponentiate = TRUE)
 
+tbl_uvregression(
+	nlsy,
+	y = nsibs,
+	include = c(sex_cat),
+	method = glm,
+	method.args = list(family = binomial()),
+	exponentiate = TRUE)
 
+tbl_uvregression (
+nlsy,
+y = nsibs,
+include = c(sex_cat),
+method = lm)
+
+tbl_uvregression (
+	nlsy,
+	x = sex_cat,
+	include = c(nsibs,sleep_wkdy,sleep_wknd,income ),
+	method = lm,
+)
 ## Multivariable regressions
+
+#Possion Regression
+poisson_model <- glm(nsibs ~ race_eth_cat + sex_cat + age_bir, data = nlsy,family =poisson())
 
 ## Some regressions
 
@@ -46,9 +68,18 @@ linear_model_int <- lm(income ~ sex_cat*age_bir + race_eth_cat,
 											 data = nlsy)
 
 
-logistic_model <- glm(glasses ~ eyesight_cat + sex_cat + income,
+linear_model3 <- glm(glasses ~ eyesight_cat + sex_cat + income,
 											data = nlsy, family = binomial())
+log_binomial <- glm (glasses ~ eyesight_cat + sex_cat, data = nlsy, family = binomial(link = "log"))
 
+tbl_regression(
+	log_binomial,
+	exponentionate = TRUE,
+	label = list(
+		glasses ~ "Glasses",
+		eyesight_cat ~ "Eyesight",
+		sex_cat ~ "Sex"
+	))
 
 ## Tables
 
