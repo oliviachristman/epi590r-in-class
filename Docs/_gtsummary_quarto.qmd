@@ -32,6 +32,8 @@ nlsy <- read_csv(here::here("data", "raw", "nlsy.csv"),
 # Customization of `tbl_summary()`
 
 ```{r}
+#| label: tbl-one
+#| tbl-cap: "Descriptive Statistics"
 tbl_summary(
   nlsy,
   by = sex_cat,
@@ -40,7 +42,22 @@ tbl_summary(
 
 ```
 
+@tbl-one shows descriptive statisitcs in the population
 
+```{r}
+#| label: tbl-descr
+#| tbl-cap: "Descriptive statistics"
+#| output-location: slide
+table1 <- tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir, sleep_wknd)) |> 
+  add_overall(last = TRUE)
+table1
+inline_text(table1, variable =  "sleep_wknd", column = "stat_0")
+```
+The overall median for hourse of sleep on the weekend was  (`r inline_text ( table1, variable =  "sleep_wknd", column = "stat_0")`) .
 
 ```{r}
 tbl_summary(
@@ -67,5 +84,12 @@ tbl_summary(
   include = c(sex_cat, race_eth_cat, region_cat,
               eyesight_cat, glasses, age_bir))
 ```
+
+```{r}
+#| output: false
+median_sleep <- median(nlsy$sleep_wknd, na.rm = TRUE)
+median_sleep
+```
+The mean hours of sleep for participants was `r median_sleep` hours on the weekend.
 
 
